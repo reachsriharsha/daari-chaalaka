@@ -1,0 +1,40 @@
+{
+  "_comment": "This is a placeholder. Replace this file with your actual google-services.json from Firebase Console",
+  "project_info": {
+    "project_number": "your-project-number",
+    "project_id": "your-project-id",
+    "storage_bucket": "your-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "your-app-id",
+        "android_client_info": {
+          "package_name": "com.anonymous.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "your-client-id",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "your-api-key"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "your-client-id",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
