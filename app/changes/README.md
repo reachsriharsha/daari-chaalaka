@@ -44,6 +44,7 @@ Each change file should include:
 | Date       | Time  | Description                            | File                                                    |
 | ---------- | ----- | -------------------------------------- | ------------------------------------------------------- |
 | 2025-06-22 | 10:45 | HomeScreen redesign with settings page | `2025_06_22_1045_home_screen_redesign_with_settings.md` |
+| 2025-06-22 | 10:55 | Remove login success message           | `2025_06_22_1055_remove_login_success_message.md`       |
 
 ---
 

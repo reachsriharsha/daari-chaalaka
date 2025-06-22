@@ -12,7 +12,7 @@ class AuthService {
       // Simulate network delay
       setTimeout(() => {
         if (this.testPhoneNumbers.includes(phoneNumber)) {
-          Alert.alert("Test Mode", "Use OTP: 123456 for testing");
+          //Alert.alert("Test Mode", "Use OTP: 123456 for testing");
           resolve({ success: true, isTestMode: true });
         } else {
           Alert.alert(
@@ -36,7 +36,6 @@ class AuthService {
           this.testPhoneNumbers.includes(phoneNumber) &&
           otp === this.testOtp
         ) {
-          Alert.alert("Success", "Login successful!");
           resolve({ success: true, isTestMode: true });
         } else {
           Alert.alert("Error", "Invalid OTP. Use 123456 for test numbers.");
