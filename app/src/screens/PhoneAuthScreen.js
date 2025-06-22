@@ -86,7 +86,7 @@ const PhoneAuthScreen = ({ onAuthSuccess }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <View style={styles.content}>
-        <Text style={styles.title}>Phone Authentication</Text>
+        <Text style={styles.title}>Log in with Phone Number</Text>
         <Text style={styles.subtitle}>
           {otpSent
             ? "Enter the OTP sent to your phone"
