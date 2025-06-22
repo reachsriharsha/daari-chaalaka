@@ -10,8 +10,6 @@ import {
 } from "react-native";
 
 const SettingsScreen = ({ onClose, onLogout, user }) => {
-  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const [biometricEnabled, setBiometricEnabled] = useState(false);
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
 
   const handleLogout = () => {
@@ -22,7 +20,7 @@ const SettingsScreen = ({ onClose, onLogout, user }) => {
         style: "destructive",
         onPress: () => {
           onLogout();
-          Alert.alert("Success", "Logged out successfully!");
+          //Alert.alert("Success", "Logged out successfully!");
         },
       },
     ]);
@@ -88,7 +86,6 @@ const SettingsScreen = ({ onClose, onLogout, user }) => {
             {user ? "🔥 Firebase Mode" : "🧪 Test Mode"}
           </Text>
         </View>
-
         {/* Settings Sections */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Account</Text>
@@ -112,37 +109,8 @@ const SettingsScreen = ({ onClose, onLogout, user }) => {
             onPress={() => Alert.alert("Info", "Privacy settings coming soon")}
           />
         </View>
-
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Preferences</Text>
-
-          <SettingItem
-            icon="🔔"
-            title="Notifications"
-            subtitle="Push notifications"
-            rightComponent={
-              <Switch
-                value={notificationsEnabled}
-                onValueChange={setNotificationsEnabled}
-                trackColor={{ false: "#767577", true: "#007AFF" }}
-                thumbColor={notificationsEnabled ? "#fff" : "#f4f3f4"}
-              />
-            }
-          />
-
-          <SettingItem
-            icon="🔒"
-            title="Biometric Login"
-            subtitle="Use fingerprint or face ID"
-            rightComponent={
-              <Switch
-                value={biometricEnabled}
-                onValueChange={setBiometricEnabled}
-                trackColor={{ false: "#767577", true: "#007AFF" }}
-                thumbColor={biometricEnabled ? "#fff" : "#f4f3f4"}
-              />
-            }
-          />
 
           <SettingItem
             icon="🌙"
@@ -158,7 +126,6 @@ const SettingsScreen = ({ onClose, onLogout, user }) => {
             }
           />
         </View>
-
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Support</Text>
 
@@ -168,24 +135,7 @@ const SettingsScreen = ({ onClose, onLogout, user }) => {
             subtitle="Get help with the app"
             onPress={() => Alert.alert("Info", "Help center coming soon")}
           />
-
-          <SettingItem
-            icon="📋"
-            title="Terms & Conditions"
-            subtitle="Read our terms"
-            onPress={() =>
-              Alert.alert("Info", "Terms & conditions coming soon")
-            }
-          />
-
-          <SettingItem
-            icon="🛡️"
-            title="Privacy Policy"
-            subtitle="Read our privacy policy"
-            onPress={() => Alert.alert("Info", "Privacy policy coming soon")}
-          />
         </View>
-
         {/* Action Buttons */}
         <View style={styles.actionSection}>
           <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>

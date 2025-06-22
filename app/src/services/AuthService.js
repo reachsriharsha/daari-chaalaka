@@ -1,4 +1,5 @@
 import { Alert } from "react-native";
+import Logger from "./Logger";
 
 // Authentication service for handling phone auth logic
 class AuthService {
@@ -23,12 +24,10 @@ class AuthService {
         }
       }, 1000);
     });
-  }
-
-  // Verify OTP
+  } // Verify OTP
   static async verifyOTP(phoneNumber, otp) {
     return new Promise((resolve) => {
-      console.log("Verifying OTP:", otp, "Expected:", this.testOtp);
+      Logger.otp("Verifying OTP:", otp, "Expected:", this.testOtp);
 
       // Simulate verification delay
       setTimeout(() => {

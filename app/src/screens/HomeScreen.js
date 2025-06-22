@@ -1,23 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useAuth } from "../context/AuthContext";
 import SettingsScreen from "./SettingsScreen";
 
 const HomeScreen = ({ onLogout }) => {
   const [showSettings, setShowSettings] = useState(false);
   const { user } = useAuth();
-  const handleLogout = async () => {
-    try {
-      // For Expo Go, just use the logout callback
-      onLogout();
-      Alert.alert("Success", "Logged out successfully!");
-    } catch (error) {
-      console.error("Error logging out:", error);
-      // Fallback to mock logout
-      onLogout();
-      Alert.alert("Success", "Logged out successfully!");
-    }
-  };
 
   const handleProfilePress = () => {
     setShowSettings(true);
@@ -52,7 +40,6 @@ const HomeScreen = ({ onLogout }) => {
       <View style={styles.content}>
         <Text style={styles.title}>Welcome!</Text>
         <Text style={styles.subtitle}>You are successfully logged in</Text>
-
         <View style={styles.modeInfo}>
           <Text style={styles.modeLabel}>
             {user ? "🔥 Firebase Mode" : "🧪 Test Mode (Expo Go)"}
@@ -60,36 +47,15 @@ const HomeScreen = ({ onLogout }) => {
           <Text style={styles.modeDescription}>
             {user
               ? "Connected to Firebase Authentication"
-              : "Using mock authentication for Expo Go testing"}
+              : "Using mock authentication for Expo Go testing"}{" "}
           </Text>
         </View>
-
         {user && user.phoneNumber && (
           <View style={styles.userInfo}>
             <Text style={styles.userInfoLabel}>Phone Number:</Text>
             <Text style={styles.userInfoText}>{user.phoneNumber}</Text>
           </View>
         )}
-
-        {/* Quick Actions */}
-        <View style={styles.quickActions}>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={handleProfilePress}
-          >
-            <Text style={styles.actionButtonIcon}>⚙️</Text>
-            <Text style={styles.actionButtonText}>Settings</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.actionButton}>
-            <Text style={styles.actionButtonIcon}>📊</Text>
-            <Text style={styles.actionButtonText}>Analytics</Text>
-          </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.logoutButtonText}>Logout</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -194,48 +160,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#333",
-  },
-  quickActions: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
-    marginBottom: 30,
-  },
-  actionButton: {
-    backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 15,
-    alignItems: "center",
-    minWidth: 100,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  actionButtonIcon: {
-    fontSize: 24,
-    marginBottom: 8,
-  },
-  actionButtonText: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#333",
-  },
-  logoutButton: {
-    backgroundColor: "#FF3B30",
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  logoutButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
   },
 });
 

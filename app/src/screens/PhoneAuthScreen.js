@@ -10,6 +10,7 @@ import {
 import PhoneInput from "../components/auth/PhoneInput";
 import OTPInput from "../components/auth/OTPInput";
 import AuthService from "../services/AuthService";
+import Logger from "../services/Logger";
 
 const PhoneAuthScreen = ({ onAuthSuccess }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -33,7 +34,7 @@ const PhoneAuthScreen = ({ onAuthSuccess }) => {
         setOtpSent(true);
       }
     } catch (error) {
-      console.error("Error sending OTP:", error);
+      Logger.error("Error sending OTP:", error);
       Alert.alert("Error", "Failed to send OTP. Please try again.");
     } finally {
       setLoading(false);
@@ -53,18 +54,18 @@ const PhoneAuthScreen = ({ onAuthSuccess }) => {
     try {
       const result = await AuthService.verifyOTP(phoneNumber, otp);
       if (result.success) {
+        console.log("OTP verified successfully");
         onAuthSuccess();
       }
     } catch (error) {
-      console.error("Error verifying OTP:", error);
+      Logger.error("Error verifying OTP:", error);
       Alert.alert("Error", "Failed to verify OTP. Please try again.");
     } finally {
       setLoading(false);
     }
   };
-
   const handleOtpChange = (text) => {
-    console.log("OTP input changed:", text);
+    Logger.otp("OTP input changed:", text);
     const formattedOtp = AuthService.formatOTP(text);
     setOtp(formattedOtp);
   };
