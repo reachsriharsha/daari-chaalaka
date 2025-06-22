@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { useAuth } from "../context/AuthContext";
+import SettingsScreen from "./SettingsScreen";
 
 const HomeScreen = ({ onLogout }) => {
+  const [showSettings, setShowSettings] = useState(false);
   const { user } = useAuth();
-
   const handleLogout = async () => {
     try {
       // For Expo Go, just use the logout callback
@@ -18,8 +19,36 @@ const HomeScreen = ({ onLogout }) => {
     }
   };
 
+  const handleProfilePress = () => {
+    setShowSettings(true);
+  };
+
+  const handleCloseSettings = () => {
+    setShowSettings(false);
+  };
+
+  if (showSettings) {
+    return (
+      <SettingsScreen
+        onClose={handleCloseSettings}
+        onLogout={onLogout}
+        user={user}
+      />
+    );
+  }
   return (
     <View style={styles.container}>
+      {/* Header with Profile Button */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Dashboard</Text>
+        <TouchableOpacity
+          style={styles.profileButton}
+          onPress={handleProfilePress}
+        >
+          <Text style={styles.profileButtonText}>👤</Text>
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.content}>
         <Text style={styles.title}>Welcome!</Text>
         <Text style={styles.subtitle}>You are successfully logged in</Text>
@@ -42,6 +71,22 @@ const HomeScreen = ({ onLogout }) => {
           </View>
         )}
 
+        {/* Quick Actions */}
+        <View style={styles.quickActions}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={handleProfilePress}
+          >
+            <Text style={styles.actionButtonIcon}>⚙️</Text>
+            <Text style={styles.actionButtonText}>Settings</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.actionButton}>
+            <Text style={styles.actionButtonIcon}>📊</Text>
+            <Text style={styles.actionButtonText}>Analytics</Text>
+          </TouchableOpacity>
+        </View>
+
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.logoutButtonText}>Logout</Text>
         </TouchableOpacity>
@@ -54,6 +99,34 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingTop: 50,
+    paddingBottom: 20,
+    backgroundColor: "#fff",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e0e0e0",
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  profileButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#007AFF",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  profileButtonText: {
+    fontSize: 20,
+    color: "#fff",
   },
   content: {
     flex: 1,
@@ -99,7 +172,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 20,
     borderRadius: 10,
-    marginBottom: 40,
+    marginBottom: 30,
     width: "100%",
     alignItems: "center",
     shadowColor: "#000",
@@ -120,6 +193,36 @@ const styles = StyleSheet.create({
   userInfoText: {
     fontSize: 18,
     fontWeight: "bold",
+    color: "#333",
+  },
+  quickActions: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+    marginBottom: 30,
+  },
+  actionButton: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 15,
+    alignItems: "center",
+    minWidth: 100,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  actionButtonIcon: {
+    fontSize: 24,
+    marginBottom: 8,
+  },
+  actionButtonText: {
+    fontSize: 14,
+    fontWeight: "600",
     color: "#333",
   },
   logoutButton: {
