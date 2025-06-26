@@ -19,6 +19,7 @@ const CreateGroupScreen = ({ onClose, user }) => {
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [contactsLoading, setContactsLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     Logger.info("CreateGroupScreen mounted, loading contacts...");
@@ -179,10 +180,15 @@ const CreateGroupScreen = ({ onClose, user }) => {
           </Text>
           <View style={styles.selectedContactsContainer}>
             {selectedContacts.map((contact, index) => (
-              <Text key={contact.id} style={styles.selectedContactText}>
-                {contact.name}
-                {index < selectedContacts.length - 1 ? ", " : ""}
-              </Text>
+              <View key={contact.id} style={styles.selectedContactChip}>
+                <Text style={styles.selectedContactText}>{contact.name}</Text>
+                <TouchableOpacity
+                  style={styles.removeContactButton}
+                  onPress={() => toggleContactSelection(contact)}
+                >
+                  <Text style={styles.removeContactText}>×</Text>
+                </TouchableOpacity>
+              </View>
             ))}
           </View>
         </View>
@@ -192,7 +198,8 @@ const CreateGroupScreen = ({ onClose, user }) => {
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>
-            Select Contacts {contactsLoading ? "(Loading...)" : ""}
+            Select Contacts{" "}
+            {contactsLoading ? "(Loading...)" : `(${contacts.length})`}
           </Text>
           <TouchableOpacity
             style={styles.refreshButton}
@@ -260,6 +267,18 @@ const CreateGroupScreen = ({ onClose, user }) => {
           onChangeText={setGroupName}
           maxLength={50}
           autoFocus={true}
+        />
+      </View>
+
+      {/* Search Input - Fixed outside of FlatList */}
+      <View style={styles.searchSection}>
+        <Text style={styles.sectionTitle}>Search Contacts</Text>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search by name or phone number..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          clearButtonMode="while-editing"
         />
       </View>
 
@@ -338,6 +357,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#e0e0e0",
   },
+  searchSection: {
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    backgroundColor: "#fff",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e0e0e0",
+  },
   content: {
     flex: 1,
   },
@@ -379,6 +405,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: "#fff",
   },
+  searchInput: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 12,
+    fontSize: 16,
+    backgroundColor: "#fff",
+  },
   selectedContactsContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -388,9 +423,32 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
     borderLeftColor: "#2196F3",
   },
+  selectedContactChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#2196F3",
+    borderRadius: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    margin: 2,
+  },
   selectedContactText: {
     fontSize: 14,
-    color: "#1976D2",
+    color: "#fff",
+    marginRight: 5,
+  },
+  removeContactButton: {
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    backgroundColor: "rgba(255,255,255,0.3)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  removeContactText: {
+    fontSize: 12,
+    color: "#fff",
+    fontWeight: "bold",
   },
   loadingContainer: {
     alignItems: "center",
