@@ -58,9 +58,7 @@ const PhoneInput = ({ phoneNumber, setPhoneNumber, onSendOTP, loading }) => {
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.label}>Phone Number</Text>
-      {/* Country Code Picker */}
       <View style={styles.phoneInputRow}>
-        {" "}
         <TouchableOpacity
           style={styles.countrySelector}
           onPress={() => setShowCountryPicker(true)}
@@ -71,7 +69,6 @@ const PhoneInput = ({ phoneNumber, setPhoneNumber, onSendOTP, loading }) => {
           </Text>
           <Text style={styles.dropdownArrow}>▼</Text>
         </TouchableOpacity>
-        {/* Phone Number Input */}
         <TextInput
           style={styles.phoneInput}
           placeholder="Phone number"
@@ -80,9 +77,9 @@ const PhoneInput = ({ phoneNumber, setPhoneNumber, onSendOTP, loading }) => {
           keyboardType="phone-pad"
           autoComplete="tel"
           maxLength={15}
-        />{" "}
+        />
+        <Text> </Text>
       </View>
-      {/* Custom Country Picker Modal */}
       <Modal
         visible={showCountryPicker}
         animationType="slide"
@@ -117,13 +114,12 @@ const PhoneInput = ({ phoneNumber, setPhoneNumber, onSendOTP, loading }) => {
           />
         </View>
       </Modal>
-      {/* Full Phone Number Display */}
       <View style={styles.phonePreview}>
         <Text style={styles.phonePreviewLabel}>Full number:</Text>
         <Text style={styles.phonePreviewText}>
           {phoneNumber || `+${selectedCountry.callingCode}`}
         </Text>
-      </View>{" "}
+      </View>
       <Text style={styles.testInfo}>
         For testing, try: 234567890 (US) or 76543210 (with any country code)
       </Text>

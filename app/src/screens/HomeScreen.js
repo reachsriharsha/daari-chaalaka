@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useAuth } from "../context/AuthContext";
 import SettingsScreen from "./SettingsScreen";
+import CreateGroupScreen from "./CreateGroupScreen";
 
 const HomeScreen = ({ onLogout }) => {
   const [showSettings, setShowSettings] = useState(false);
+  const [showCreateGroup, setShowCreateGroup] = useState(false);
   const { user } = useAuth();
 
   const handleProfilePress = () => {
@@ -15,6 +17,13 @@ const HomeScreen = ({ onLogout }) => {
     setShowSettings(false);
   };
 
+  const handleCreateGroupPress = () => {
+    setShowCreateGroup(true);
+  };
+
+  const handleCloseCreateGroup = () => {
+    setShowCreateGroup(false);
+  };
   if (showSettings) {
     return (
       <SettingsScreen
@@ -24,19 +33,30 @@ const HomeScreen = ({ onLogout }) => {
       />
     );
   }
+
+  if (showCreateGroup) {
+    return <CreateGroupScreen onClose={handleCloseCreateGroup} user={user} />;
+  }
   return (
     <View style={styles.container}>
       {/* Header with Profile Button */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Dashboard</Text>
-        <TouchableOpacity
-          style={styles.profileButton}
-          onPress={handleProfilePress}
-        >
-          <Text style={styles.profileButtonText}>👤</Text>
-        </TouchableOpacity>
+        <View style={styles.headerButtons}>
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={handleCreateGroupPress}
+          >
+            <Text style={styles.addButtonText}>+</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.profileButton}
+            onPress={handleProfilePress}
+          >
+            <Text style={styles.profileButtonText}>👤</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-
       <View style={styles.content}>
         <Text style={styles.title}>Welcome!</Text>
         <Text style={styles.subtitle}>You are successfully logged in</Text>
@@ -47,7 +67,7 @@ const HomeScreen = ({ onLogout }) => {
           <Text style={styles.modeDescription}>
             {user
               ? "Connected to Firebase Authentication"
-              : "Using mock authentication for Expo Go testing"}{" "}
+              : "Using mock authentication for Expo Go testing"}
           </Text>
         </View>
         {user && user.phoneNumber && (
@@ -81,6 +101,24 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     color: "#333",
+  },
+  headerButtons: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  addButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#4CAF50",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 10,
+  },
+  addButtonText: {
+    fontSize: 24,
+    color: "#fff",
+    fontWeight: "bold",
   },
   profileButton: {
     width: 40,
